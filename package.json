@@ -6,7 +6,8 @@
   "scripts": {
     "start:dev": "nodemon",
     "build": "rimraf ./build && tsc",
-    "start": "npm run build && node build/index.js"
+    "start": "npm run build && node build/index.js",
+    "test": "npm run build && node .\\build\\async\\promise-all-concurrent-n.js"
   },
   "repository": {
     "type": "git",
@@ -25,5 +26,6 @@
     "rimraf": "^3.0.2",
     "ts-node": "^9.1.1",
     "typescript": "^4.2.3"
-  }
+  },
+  "dependencies": {}
 }
