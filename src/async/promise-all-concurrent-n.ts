@@ -1,9 +1,9 @@
 /**
  * Creates a promise handler that processes a list of promises in queue with limited concurency, helps to avoid overloading clients during bulk processing
- * @param limit number, number of promises to process in a batch
- * @returns function, that takes an input `Array<() => Promise<T>>` list, and returns `Promise<T[]>`
+ * @param {number} limit number of promises to process concurrently
+ * @returns {Function} concurrent promise handling function
  */
-const promiseAllConcurrent: (limit: number) => <T>(list: Array<() => Promise<T>>) => Promise<T[]> = (function () {
+const promiseAllConcurrent: (limit: number) => <T>(list: (() => Promise<T>)[]) => Promise<T[]> = (function () {
     interface IMeta<T> {
         concurrent: number;
         queued: number;
@@ -11,11 +11,11 @@ const promiseAllConcurrent: (limit: number) => <T>(list: Array<() => Promise<T>>
     }
     /**
      * Processes a list of promises in queue with limited concurency, helps to avoid overloading clients during bulk processing
-     * @param limit number, active concurrent promises at execution time
-     * @param list array, list of functions that returns promises to be procesed
-     * @returns promise
+     * @param {number} limit number of promises to process concurrently
+     * @param {Array<Function>} list list of functions that returns promises to be procesed
+     * @returns {Promise<Array>} promise
      */
-    function concurrentProcess<T>(limit: number, list: Array<() => Promise<T>>): Promise<T[]> {
+    function concurrentProcess<T>(limit: number, list: (() => Promise<T>)[]): Promise<T[]> {
         const total = list.length;
         return limit >= total ?
             Promise.all(list.map(promise => promise())) :
@@ -46,7 +46,7 @@ const promiseAllConcurrent: (limit: number) => <T>(list: Array<() => Promise<T>>
                 }
             });
     }
-    return (limit: number) => <T>(list: Array<() => Promise<T>>) => concurrentProcess<T>(limit, list);
+    return (limit: number) => <T>(list: (() => Promise<T>)[]) => concurrentProcess<T>(limit, list);
 }());
 
 

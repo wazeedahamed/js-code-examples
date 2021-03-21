@@ -1,15 +1,15 @@
 "use strict";
 /**
  * Creates a promise handler that processes a list of promises in queue with limited concurency, helps to avoid overloading clients during bulk processing
- * @param limit number, number of promises to process in a batch
- * @returns function, that takes an input `Array<() => Promise<T>>` list, and returns `Promise<T[]>`
+ * @param {number} limit number of promises to process concurrently
+ * @returns {Function} concurrent promise handling function
  */
 var promiseAllConcurrent = (function () {
     /**
      * Processes a list of promises in queue with limited concurency, helps to avoid overloading clients during bulk processing
-     * @param limit number, active concurrent promises at execution time
-     * @param list array, list of functions that returns promises to be procesed
-     * @returns promise
+     * @param {number} limit number of promises to process concurrently
+     * @param {Array<Function>} list list of functions that returns promises to be procesed
+     * @returns {Promise<Array>} promise
      */
     function concurrentProcess(limit, list) {
         var total = list.length;

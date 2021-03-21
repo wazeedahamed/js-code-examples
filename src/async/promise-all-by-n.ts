@@ -1,16 +1,16 @@
 /**
  * Creates a promise handler that processes a list of promises in batches, helps to avoid overloading clients during bulk processing
- * @param limit number, number of promises to process in a batch
- * @returns function, that takes an input `Array<() => Promise<T>>` list, and returns `Promise<T[]>`
+ * @param {number} limit number of promises to process in a batch
+ * @returns {Function} batch promise handling function
  */
-const promiseAllByBatch: (limit: number) => <T>(list: Array<() => Promise<T>>) => Promise<T[]> = (function () {
+const promiseAllByBatch: (limit: number) => <T>(list: (() => Promise<T>)[]) => Promise<T[]> = (function () {
     /**
      * Processes a list of promises in batches, helps to avoid overloading clients during bulk processing
-     * @param limit number, promises to process in a batch
-     * @param list array, list of functions that returns promises to be procesed
-     * @returns promise
+     * @param {number} limit number of promises to process in a batch
+     * @param {Array<Function>} list list of functions that returns promises to be procesed
+     * @returns {Promise<Array>} promise
      */
-    function batchProcess<T>(limit: number, list: Array<() => Promise<T>>): Promise<T[]> {
+    function batchProcess<T>(limit: number, list: (() => Promise<T>)[]): Promise<T[]> {
         const total = list.length;
         return new Promise<T[]>(resolve => {
             next(0, []);
@@ -26,7 +26,7 @@ const promiseAllByBatch: (limit: number) => <T>(list: Array<() => Promise<T>>) =
             }
         });
     }
-    return (limit: number) => <T>(list: Array<() => Promise<T>>) => batchProcess<T>(limit, list);
+    return (limit: number) => <T>(list: (() => Promise<T>)[]) => batchProcess<T>(limit, list);
 }());
 
 

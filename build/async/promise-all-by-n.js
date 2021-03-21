@@ -1,15 +1,15 @@
 "use strict";
 /**
  * Creates a promise handler that processes a list of promises in batches, helps to avoid overloading clients during bulk processing
- * @param limit number, number of promises to process in a batch
- * @returns function, that takes an input `Array<() => Promise<T>>` list, and returns `Promise<T[]>`
+ * @param {number} limit number of promises to process in a batch
+ * @returns {Function} batch promise handling function
  */
 var promiseAllByBatch = (function () {
     /**
      * Processes a list of promises in batches, helps to avoid overloading clients during bulk processing
-     * @param limit number, promises to process in a batch
-     * @param list array, list of functions that returns promises to be procesed
-     * @returns promise
+     * @param {number} limit number of promises to process in a batch
+     * @param {Array<Function>} list list of functions that returns promises to be procesed
+     * @returns {Promise<Array>} promise
      */
     function batchProcess(limit, list) {
         var total = list.length;
