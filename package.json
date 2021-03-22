@@ -7,7 +7,7 @@
     "start:dev": "nodemon",
     "build": "rimraf ./build && tsc",
     "start": "npm run build && node build/index.js",
-    "test": "tsc .\\src\\async\\promise.ts && node .\\src\\async\\promise.js"
+    "test": "tsc .\\src\\clone\\clone-object.ts && node .\\src\\clone\\clone-object.js"
   },
   "repository": {
     "type": "git",
