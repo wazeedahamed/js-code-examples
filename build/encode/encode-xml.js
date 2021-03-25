@@ -7,7 +7,9 @@ var XML_CHAR_MAP = {
     "'": '&apos;'
 };
 /**
- * This function excodes XML data
+ * Encodes XML special chars
+ * @param xmldata xml string to encode
+ * @returns encoded xml string
  */
 function encodeXMLComponent(xmldata) {
     return xmldata.replace(/[<>&"']/g, function (m) { return (XML_CHAR_MAP[m] || m); });

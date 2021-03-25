@@ -6,7 +6,9 @@ const XML_CHAR_MAP: { [key: string]: string } = {
     "'": '&apos;'
 }
 /**
- * This function excodes XML data
+ * Encodes XML special chars
+ * @param xmldata xml string to encode
+ * @returns encoded xml string
  */
 function encodeXMLComponent(xmldata: string) {
     return xmldata.replace(/[<>&"']/g, (m) => (XML_CHAR_MAP[m] || m));
